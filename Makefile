@@ -1,18 +1,18 @@
 NAME	=	push_swaped
-SRCS 	=	push_swap.c
-OBJ 	=	$(SRCS:.c=.o)
+SRCS 	=	$(wildcard *.c)
+OBJS 	=	$(SRCS:.c=.o)
 CC		=	gcc
 CFLAGS	=	-Wall -Wextra -Werror
 RM		=	rm -f
 
 all: $(NAME)
 
-$(NAME):
+$(NAME): $(OBJS)
 		$(CC) $(CFLAGS) $(SRCS)
-		ar rc $(NAME) $(OBJ)
+		ar rc $(NAME) $(OBJS)
 
 clean:
-		$(RM) $(OBJ)
+		$(RM) $(OBJS)
 
 fclean: clean
 		$(RM) $(NAME)

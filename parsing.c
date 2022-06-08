@@ -1,5 +1,4 @@
 #include "push_swap.h"
-#include <stdio.h>
 
 size_t	ft_strlen(const char *str)
 {
@@ -11,6 +10,24 @@ size_t	ft_strlen(const char *str)
 	while (str[i])
 		i++;
 	return (i);
+}
+
+int	no_char(const char *str)
+{
+	size_t	i;
+	size_t	j;
+
+	j = ft_strlen(str);
+	i = 1;
+
+	while (i < j)
+	{
+		if (str[i] >= 48 && str[i] <= 57)
+			i++;
+		else
+			return (0);
+	}
+	return (1);
 }
 
 void	ft_putstr(const char *str)
@@ -36,8 +53,14 @@ int	only_digit(char **av, int ac)
 	{
 		while (j < ft_strlen(av[i]))
 		{
-			if ((av[i][j] >= 48 && av[i][j] <= 57) || av[i][0] == '-')
+			if (av[i][j] >= 48 && av[i][j] <= 57)
 				j++;
+			else if (av[i][0] == '-')
+			{
+				if (!no_char(av[i]))
+					return (0);
+				i++;
+			}
 			else
 				return (0);
 		}
@@ -66,7 +89,7 @@ int	ft_atoi(const char *str)
 		res = res * 10 + (*str - 48);
 		++str;
 	}
-	if (res * neg >= 2147483647 || res * neg <= -2147483647)
+	if (res * neg > 2147483647 || res * neg < -2147483647)
 	{
 		ft_putstr("Error\n");
 		exit (0);
