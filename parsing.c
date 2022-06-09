@@ -4,7 +4,7 @@ t_stack	*create_node(void)
 {
 	t_stack	*a;
 
-	a = (t_stack*)malloc(sizeof(t_stack));
+	a = (t_stack *)malloc(sizeof(t_stack));
 	a->num = 0;
 	a->diff = 1;
 	a->next = NULL;
@@ -77,6 +77,12 @@ int	no_double(int tab[], int ac)
 	return (1);
 }
 
+void	ft_error(void);
+{
+	write(1, "Error\n", 6);
+	exit (0);
+}
+
 t_stack	*ft_tabini(int ac, char **av)
 {
 	t_stack	*a;
@@ -88,27 +94,20 @@ t_stack	*ft_tabini(int ac, char **av)
 	j = 1;
 	i = 0;
 	if (!only_digit(av, ac - 1))
-	{
-		write(1, "Error\n", 6);
-		exit (0);
-	}
+		ft_error();
 	while (j < ac)
 		tab[i++] = ft_atoi(av[j++]);
 	if (!no_double(tab, ac - 1))
-	{
-		write(1, "Error\n", 6);
-		exit (0);
-	}
+		ft_error();
 	a = create_node();
 	tmp = a;
 	i = 0;
 	while (i < ac - 1)
 	{
-		tmp->num = tab[i];
+		tmp->num = tab[i++];
 		tmp->next = create_node();
 		tmp = tmp->next;
 		tmp->diff = 1;
-		i++;
 	}
 	return (a);
 }

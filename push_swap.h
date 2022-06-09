@@ -5,11 +5,11 @@
 # include <unistd.h>
 # include <stdlib.h>
 
-typedef struct		s_stack
+typedef struct s_stack
 {
-	int	num;
-	int	diff;
-	struct	s_stack	*next;
+	int				num;
+	int				diff;
+	struct s_stack	*next;
 }							t_stack;
 
 size_t	ft_strlen(const char *str);
