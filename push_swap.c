@@ -2,27 +2,11 @@
 
 int	main(int ac, char **av)
 {
-	int	tab[ac - 1];
-	int	i;
-	int	j;
+	t_stack	*a;
 
-	j = 1;
-	i = 0;
 	if (ac > 1)
 	{
-		if (!only_digit(av, ac))
-		{
-			ft_putstr("Error\n");
-			exit (0);
-		}
-		while (j < ac)
-			tab[i++] = ft_atoi(av[j++]);
-		i = 0;
-		while (i < ac - 1)
-		{
-			printf("%d", tab[i]);
-			i++;
-		}
+		a = ft_tabini(ac, av);
+		printf("%i %i %i %i", a->num, a->next->num, a->next->next->num, a->next->next->next->num);
 	}
-	return (0);
 }

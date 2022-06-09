@@ -1,45 +1,14 @@
 #include "push_swap.h"
 
-size_t	ft_strlen(const char *str)
+t_stack	*create_node(void)
 {
-	size_t	i;
+	t_stack	*a;
 
-	i = 0;
-	if (!str)
-		return (0);
-	while (str[i])
-		i++;
-	return (i);
-}
-
-int	no_char(const char *str)
-{
-	size_t	i;
-	size_t	j;
-
-	j = ft_strlen(str);
-	i = 1;
-
-	while (i < j)
-	{
-		if (str[i] >= 48 && str[i] <= 57)
-			i++;
-		else
-			return (0);
-	}
-	return (1);
-}
-
-void	ft_putstr(const char *str)
-{
-	size_t	i;
-
-	i = 0;
-	while (i < ft_strlen(str))
-	{
-		write(1, &str[i], 1);
-		i++;
-	}
+	a = (t_stack*)malloc(sizeof(t_stack));
+	a->num = 0;
+	a->diff = 1;
+	a->next = NULL;
+	return (a);
 }
 
 int	only_digit(char **av, int ac)
@@ -70,29 +39,76 @@ int	only_digit(char **av, int ac)
 	return (1);
 }
 
-int	ft_atoi(const char *str)
+int	no_char(const char *str)
 {
-	int	res;
-	int	neg;
+	size_t	i;
+	size_t	j;
 
-	res = 0;
-	neg = 1;
-	while (*str && (*str == ' ' || *str == '\n' || *str == '\r'
-			|| *str == '\v' || *str == '\t' || *str == '\f'))
-			++str;
-	if (*str == '-')
-		neg = -1;
-	if (*str == '-' || *str == '+')
-		++str;
-	while (*str && *str >= '0' && *str <= '9')
+	j = ft_strlen(str);
+	i = 1;
+	while (i < j)
 	{
-		res = res * 10 + (*str - 48);
-		++str;
+		if (str[i] >= 48 && str[i] <= 57)
+			i++;
+		else
+			return (0);
 	}
-	if (res * neg > 2147483647 || res * neg < -2147483647)
+	return (1);
+}
+
+int	no_double(int tab[], int ac)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 1;
+	while (i < ac)
 	{
-		ft_putstr("Error\n");
+		while (j < ac && i < ac)
+		{
+			if (tab[i] == tab[j])
+				return (0);
+			j++;
+		}
+		i++;
+		j = i + 1;
+	}
+	return (1);
+}
+
+t_stack	*ft_tabini(int ac, char **av)
+{
+	t_stack	*a;
+	t_stack	*tmp;
+	int		tab[250];
+	int		i;
+	int		j;
+
+	j = 1;
+	i = 0;
+	if (!only_digit(av, ac - 1))
+	{
+		write(1, "Error\n", 6);
 		exit (0);
 	}
-	return (res * neg);
+	while (j < ac)
+		tab[i++] = ft_atoi(av[j++]);
+	if (!no_double(tab, ac - 1))
+	{
+		write(1, "Error\n", 6);
+		exit (0);
+	}
+	a = create_node();
+	tmp = a;
+	i = 0;
+	while (i < ac - 1)
+	{
+		tmp->num = tab[i];
+		tmp->next = create_node();
+		tmp = tmp->next;
+		tmp->diff = 1;
+		i++;
+	}
+	return (a);
 }

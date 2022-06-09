@@ -2,7 +2,7 @@ NAME	=	push_swaped
 SRCS 	=	$(wildcard *.c)
 OBJS 	=	$(SRCS:.c=.o)
 CC		=	gcc
-CFLAGS	=	-Wall -Wextra -Werror
+CFLAGS	=	-Fsanitize=address -Wall -Wextra -Werror
 RM		=	rm -f
 
 all: $(NAME)
