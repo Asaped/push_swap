@@ -7,5 +7,6 @@ int	main(int ac, char **av)
 	if (ac > 1)
 	{
 		a = ft_tabini(ac, av);
+		free(a);
 	}
 }

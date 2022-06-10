@@ -8,7 +8,6 @@
 typedef struct s_stack
 {
 	int				num;
-	int				diff;
 	struct s_stack	*next;
 }							t_stack;
 

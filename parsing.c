@@ -6,7 +6,6 @@ t_stack	*create_node(void)
 
 	a = (t_stack *)malloc(sizeof(t_stack));
 	a->num = 0;
-	a->diff = 1;
 	a->next = NULL;
 	return (a);
 }
@@ -24,12 +23,8 @@ int	only_digit(char **av, int ac)
 		{
 			if (av[i][j] >= 48 && av[i][j] <= 57)
 				j++;
-			else if (av[i][0] == '-')
-			{
-				if (!no_char(av[i]))
-					return (0);
+			else if (av[i][0] == '-' && ft_strlen(av[i]) >= 2 && no_char(av[i]))	
 				i++;
-			}
 			else
 				return (0);
 		}
@@ -77,7 +72,7 @@ int	no_double(int tab[], int ac)
 	return (1);
 }
 
-void	ft_error(void);
+void	ft_error(void)
 {
 	write(1, "Error\n", 6);
 	exit (0);
@@ -93,8 +88,8 @@ t_stack	*ft_tabini(int ac, char **av)
 
 	j = 1;
 	i = 0;
-	if (!only_digit(av, ac - 1))
-		ft_error();
+	if (!only_digit(av, ac))
+		ft_error();	
 	while (j < ac)
 		tab[i++] = ft_atoi(av[j++]);
 	if (!no_double(tab, ac - 1))
@@ -104,10 +99,13 @@ t_stack	*ft_tabini(int ac, char **av)
 	i = 0;
 	while (i < ac - 1)
 	{
-		tmp->num = tab[i++];
-		tmp->next = create_node();
-		tmp = tmp->next;
-		tmp->diff = 1;
+		tmp->num = tab[i];
+		if (i < ac - 2)
+		{
+			tmp->next = create_node();
+			tmp = tmp->next;
+		}
+		i++;
 	}
 	return (a);
 }
